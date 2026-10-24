@@ -1,0 +1,919 @@
+/* ==========================================================================
+   GIROVERDE AMERICANA - DESIGN RETRÔ EDITORIAL (ANOS 60/70)
+   Inspirado no design gráfico editorial e cartazes ambientais dos anos 70
+   ========================================================================== */
+
+:root {
+  --cor-papel: #fbf8f1;
+  --cor-card: #ffffff;
+  --cor-tinta: #1a201c;
+  --cor-tinta-suave: #576159;
+  --cor-borda: #ded3c0;
+  --cor-borda-forte: #1e4620;
+  
+  --cor-verde-floresta: #1e4620;
+  --cor-verde-claro: #ebf3eb;
+  --cor-terracota: #c85028;
+  --cor-terracota-claro: #fbeee8;
+  --cor-ocre: #d4881a;
+  --cor-ocre-claro: #fef5e6;
+  
+  --fonte-serif: 'DM Serif Display', Georgia, serif;
+  --fonte-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  
+  --borda-fina: 1.5px solid var(--cor-borda);
+  --borda-retro: 2px solid var(--cor-verde-floresta);
+  --sombra-retro: 4px 4px 0px #1e4620;
+  --sombra-leve: 0 2px 6px rgba(26, 32, 28, 0.05);
+  --radius-suave: 12px;
+  --radius-pill: 999px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--cor-papel);
+  color: var(--cor-tinta);
+  font-family: var(--fonte-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.layout-raiz-editorial {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   BARRA SUPERIOR (NAVBAR)
+   ========================================================================== */
+.navbar-topo {
+  background-color: var(--cor-card);
+  border-bottom: 2px solid var(--cor-borda);
+  padding: 14px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-conteudo {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-marca {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.marca-logo {
+  font-family: var(--fonte-serif);
+  font-size: 1.75rem;
+  color: var(--cor-verde-floresta);
+  letter-spacing: -0.5px;
+}
+
+.marca-cidade {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cor-terracota);
+  background-color: var(--cor-terracota-claro);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.nav-direita {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-atendimento {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-tinta-suave);
+}
+
+.icone-telefone {
+  color: var(--cor-verde-floresta);
+}
+
+.nav-menu {
+  display: none;
+  gap: 18px;
+}
+
+@media (min-width: 768px) {
+  .nav-menu {
+    display: flex;
+  }
+}
+
+.nav-menu a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cor-tinta);
+  transition: color 0.15s ease;
+}
+
+.nav-menu a:hover {
+  color: var(--cor-terracota);
+}
+
+/* ==========================================================================
+   HERO SECTION EDITORIAL
+   ========================================================================== */
+.hero-editorial {
+  position: relative;
+  background-color: var(--cor-card);
+  border-bottom: 2px solid var(--cor-borda);
+  padding: 48px 24px 36px;
+}
+
+.hero-faixa-cores {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(
+    to right,
+    var(--cor-verde-floresta) 25%,
+    var(--cor-ocre) 25%,
+    var(--cor-ocre) 50%,
+    var(--cor-terracota) 50%,
+    var(--cor-terracota) 75%,
+    #8d6346 75%
+  );
+}
+
+.hero-container {
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-chapeu {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--cor-verde-floresta);
+  margin-bottom: 12px;
+}
+
+.hero-titulo {
+  font-family: var(--fonte-serif);
+  font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+  line-height: 1.15;
+  color: var(--cor-tinta);
+  margin-bottom: 14px;
+}
+
+.hero-descricao {
+  font-size: 1.1rem;
+  color: var(--cor-tinta-suave);
+  max-width: 680px;
+  margin: 0 auto 28px;
+  line-height: 1.55;
+}
+
+.hero-pilares {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pilar-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--cor-papel);
+  border: var(--borda-fina);
+  border-radius: var(--radius-pill);
+  padding: 6px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--cor-verde-floresta);
+}
+
+/* ==========================================================================
+   MIOLO E CONTAINER PRINCIPAL
+   ========================================================================== */
+.container-miolo {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 36px 20px 48px;
+  width: 100%;
+  flex: 1;
+}
+
+/* ==========================================================================
+   FORMULÁRIO DE BUSCA
+   ========================================================================== */
+.busca-formulario {
+  background-color: var(--cor-card);
+  border: var(--borda-retro);
+  border-radius: var(--radius-suave);
+  box-shadow: var(--sombra-retro);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .busca-formulario {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.busca-campos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .busca-campos {
+    flex-direction: row;
+  }
+}
+
+.campo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--cor-papel);
+  border: var(--borda-fina);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.campo-item.principal { flex: 2; }
+.campo-item.cidade { flex: 1; }
+
+.campo-icone {
+  color: var(--cor-verde-floresta);
+  flex-shrink: 0;
+}
+
+.campo-item input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 0.95rem;
+  font-family: var(--fonte-sans);
+  color: var(--cor-tinta);
+}
+
+.btn-consultar {
+  background-color: var(--cor-verde-floresta);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: var(--fonte-sans);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-consultar:hover {
+  background-color: #143217;
+}
+
+/* ==========================================================================
+   ATALHOS FREQUENTES
+   ========================================================================== */
+.painel-atalhos-editorial {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.atalhos-rotulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-tinta-suave);
+}
+
+.atalhos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn-atalho-tag {
+  background-color: var(--cor-card);
+  border: var(--borda-fina);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--cor-tinta);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-atalho-tag:hover {
+  border-color: var(--cor-verde-floresta);
+  background-color: var(--cor-verde-claro);
+  color: var(--cor-verde-floresta);
+}
+
+/* ==========================================================================
+   STATUS DE CONSULTA
+   ========================================================================== */
+.aviso-status {
+  padding: 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.aviso-status.carregando {
+  background-color: var(--cor-verde-claro);
+  color: var(--cor-verde-floresta);
+  border: 1px solid #c2dec2;
+}
+
+.aviso-status.erro {
+  background-color: #fdf2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* ==========================================================================
+   PAINEL DE RESULTADOS
+   ========================================================================== */
+.painel-resultados-editorial {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+/* ==========================================================================
+   FICHA DO MATERIAL
+   ========================================================================== */
+.ficha-material-editorial {
+  background-color: var(--cor-card);
+  border: var(--borda-fina);
+  border-left: 6px solid var(--cor-verde-floresta);
+  border-radius: var(--radius-suave);
+  padding: 28px;
+  box-shadow: var(--sombra-leve);
+}
+
+.ficha-topo {
+  margin-bottom: 20px;
+}
+
+.categoria-tag-retro {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cor-terracota);
+  background-color: var(--cor-terracota-claro);
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.ficha-topo h2 {
+  font-family: var(--fonte-serif);
+  font-size: 2.1rem;
+  color: var(--cor-tinta);
+  line-height: 1.2;
+}
+
+/* Painel de destaque técnico (Vidros por Cor & Madeiras) */
+.painel-destaque-tecnico {
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  border-left: 4px solid;
+}
+
+.painel-destaque-tecnico.vidro {
+  background-color: #f0f7f4;
+  border-left-color: #1b4332;
+  border-top: 1px solid #cce3de;
+  border-right: 1px solid #cce3de;
+  border-bottom: 1px solid #cce3de;
+}
+
+.painel-destaque-tecnico.madeira {
+  background-color: #fdf6ec;
+  border-left-color: #c85028;
+  border-top: 1px solid #f6dfc2;
+  border-right: 1px solid #f6dfc2;
+  border-bottom: 1px solid #f6dfc2;
+}
+
+.painel-destaque-tecnico strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--cor-tinta);
+}
+
+.painel-destaque-tecnico p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #2d3748;
+  margin-bottom: 8px;
+}
+
+.painel-destaque-tecnico p:last-child {
+  margin-bottom: 0;
+}
+
+.tags-cores-vidro {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag-vidro {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.tag-vidro.incolor {
+  background-color: #ffffff;
+  border-color: #1b4332;
+  color: #1b4332;
+}
+
+.tag-vidro.verde {
+  background-color: #d8f3dc;
+  border-color: #40916c;
+  color: #1b4332;
+}
+
+.tag-vidro.ambar {
+  background-color: #fef3c7;
+  border-color: #d97706;
+  color: #78350f;
+}
+
+.ficha-colunas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .ficha-colunas {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.bloco-guia-item {
+  background-color: var(--cor-papel);
+  border: var(--borda-fina);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.bloco-guia-item h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cor-verde-floresta);
+  margin-bottom: 6px;
+}
+
+.bloco-guia-item p {
+  font-size: 0.9rem;
+  color: var(--cor-tinta);
+  line-height: 1.5;
+}
+
+.painel-alerta-cuidados {
+  background-color: #fff9ed;
+  border: 1px solid #f6d89b;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.alerta-icone {
+  color: #c05621;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.painel-alerta-cuidados strong {
+  display: block;
+  font-size: 0.85rem;
+  color: #744210;
+  margin-bottom: 2px;
+}
+
+.painel-alerta-cuidados p {
+  font-size: 0.875rem;
+  color: #744210;
+}
+
+.ficha-rodape-norma {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--cor-tinta-suave);
+  border-top: var(--borda-fina);
+  padding-top: 14px;
+}
+
+/* ==========================================================================
+   LOCAIS DE ENTREGA (ECOPONTOS)
+   ========================================================================== */
+.secao-pontos-editorial {
+  background-color: var(--cor-card);
+  border: var(--borda-fina);
+  border-radius: var(--radius-suave);
+  padding: 28px;
+  box-shadow: var(--sombra-leve);
+}
+
+.secao-cabecalho-limpo {
+  margin-bottom: 22px;
+}
+
+.secao-cabecalho-limpo h2 {
+  font-family: var(--fonte-serif);
+  font-size: 1.7rem;
+  color: var(--cor-tinta);
+  margin-bottom: 4px;
+}
+
+.secao-cabecalho-limpo p {
+  font-size: 0.9rem;
+  color: var(--cor-tinta-suave);
+}
+
+.grade-pontos-editorial {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .grade-pontos-editorial {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card-ponto-editorial {
+  background-color: var(--cor-papel);
+  border: var(--borda-fina);
+  border-radius: 8px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-ponto-topo {
+  margin-bottom: 4px;
+}
+
+.selo-tipo-ponto {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.selo-ecoponto { background-color: var(--cor-verde-claro); color: var(--cor-verde-floresta); }
+.selo-cooperativa { background-color: var(--cor-ocre-claro); color: #8c5506; }
+.selo-polo { background-color: var(--cor-terracota-claro); color: var(--cor-terracota); }
+
+.card-ponto-editorial h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--cor-tinta);
+}
+
+.dado-linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--cor-tinta-suave);
+}
+
+.box-condicao-recebimento {
+  background-color: var(--cor-card);
+  border: 1px dashed var(--cor-borda);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.825rem;
+  color: var(--cor-tinta);
+  margin-top: 4px;
+}
+
+.btn-rota-mapa {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cor-verde-floresta);
+  font-size: 0.825rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 6px;
+  align-self: flex-start;
+}
+
+.btn-rota-mapa:hover {
+  text-decoration: underline;
+}
+
+.aviso-sem-pontos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  background-color: var(--cor-papel);
+  border: var(--borda-fina);
+  border-radius: 8px;
+  color: var(--cor-tinta-suave);
+}
+
+/* ==========================================================================
+   CATÁLOGO DE CATEGORIAS
+   ========================================================================== */
+.secao-categorias-editorial {
+  margin-bottom: 48px;
+}
+
+.grade-categorias {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.categoria-item-btn {
+  background-color: var(--cor-card);
+  border: var(--borda-fina);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.categoria-item-btn:hover {
+  border-color: var(--cor-verde-floresta);
+  background-color: #fafbf9;
+  box-shadow: 0 2px 8px rgba(30, 70, 32, 0.08);
+}
+
+.categoria-nome {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cor-tinta);
+}
+
+.categoria-desc {
+  font-size: 0.8rem;
+  color: var(--cor-tinta-suave);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   GUIA DE REGULAMENTO (COMO FUNCIONA)
+   ========================================================================== */
+.secao-guia-editorial {
+  background-color: var(--cor-card);
+  border: var(--borda-fina);
+  border-radius: var(--radius-suave);
+  padding: 28px;
+  margin-bottom: 48px;
+}
+
+.grade-regras-editorial {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .grade-regras-editorial {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card-regra-editorial {
+  background-color: var(--cor-papel);
+  border: var(--borda-fina);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.regra-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.regra-numero {
+  font-family: var(--fonte-serif);
+  font-size: 1.5rem;
+  color: var(--cor-terracota);
+}
+
+.regra-icone-moldura {
+  color: var(--cor-verde-floresta);
+}
+
+.card-regra-editorial h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--cor-tinta);
+}
+
+.card-regra-editorial p {
+  font-size: 0.875rem;
+  color: var(--cor-tinta-suave);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   DICAS AMBIENTAIS E SAÚDE PÚBLICA
+   ========================================================================== */
+.secao-dicas-editorial {
+  margin-bottom: 48px;
+}
+
+.grade-dicas-editorial {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .grade-dicas-editorial {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card-dica-editorial {
+  background-color: var(--cor-card);
+  border: var(--borda-fina);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.dica-topo-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dica-tema-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cor-verde-floresta);
+}
+
+.dica-icone-info {
+  color: var(--cor-ocre);
+}
+
+.card-dica-editorial h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--cor-tinta);
+}
+
+.card-dica-editorial p {
+  font-size: 0.875rem;
+  color: var(--cor-tinta-suave);
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   RODAPÉ EDITORIAL
+   ========================================================================== */
+.rodape-editorial {
+  background-color: #172418;
+  color: #e5ede6;
+  border-top: 3px solid var(--cor-ocre);
+  padding: 44px 24px 24px;
+  margin-top: auto;
+}
+
+.rodape-limite {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+@media (min-width: 768px) {
+  .rodape-limite {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.rodape-col-principal h4 {
+  font-family: var(--fonte-serif);
+  font-size: 1.4rem;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.rodape-col-principal p {
+  font-size: 0.875rem;
+  color: #a4bba7;
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+.rodape-col-links span {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rodape-col-links ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rodape-col-links li {
+  font-size: 0.85rem;
+  color: #c2d6c5;
+}
+
+.rodape-creditos {
+  max-width: 1040px;
+  margin: 28px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid #283e2a;
+  font-size: 0.8rem;
+  color: #79947c;
+  text-align: center;
+}
