@@ -89,3 +89,11 @@ flowchart LR
 Conectar Git ao GitHub, digitar o seguinte Comando no bash/cmd:
 
 `git config --global user.name "SeuUserName"`
+
+### Meu Primeiro Projeto Antigravity com IA Generativa
+
+**O Contexto (O que vamos Construir)**
+
+- Gerenciador de Tarefas: HTML, CSS, JavaScript
+
+**O Prompt para o Antigravity**

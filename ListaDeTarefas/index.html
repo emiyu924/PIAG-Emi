@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Dia - Lista de Tarefas (Anos 50)</title>
+  
+  <!-- Fontes retrô anos 50 via Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Shrikhande&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Folha de estilos externa -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Container principal com moldura retrô centralizada -->
+  <main class="app-container">
+    <header class="app-header">
+      <div class="vintage-badge">&#9733; MEU DIA &#9733;</div>
+      <h1 class="app-title">Lista de Tarefas</h1>
+    </header>
+
+    <!-- Gerenciador de múltiplas listas salvas -->
+    <section class="list-manager">
+      <label for="listSelect" class="manager-label">Sua Lista:</label>
+      <div class="manager-controls">
+        <select id="listSelect" class="vintage-select"></select>
+        <button id="newListButton" class="btn btn-secondary" title="Criar ou salvar nova lista">+ Lista</button>
+      </div>
+    </section>
+
+    <!-- Formulário vintage para inserção de tarefas -->
+    <section class="task-form">
+      <input 
+        type="text" 
+        id="taskInput" 
+        class="task-input" 
+        placeholder="O que você precisa fazer?" 
+        autocomplete="off"
+      >
+      <button id="addButton" class="btn btn-add">Adicionar</button>
+    </section>
+
+    <!-- Lista com visual de fichas e checklist retrô -->
+    <section class="task-section">
+      <ul id="taskList" class="task-list"></ul>
+    </section>
+  </main>
+
+  <!-- Script com a lógica da aplicação -->
+  <script src="script.js"></script>
+</body>
+</html>
