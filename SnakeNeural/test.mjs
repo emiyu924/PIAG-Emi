@@ -63,7 +63,11 @@ console.log(
   )
 );
 
-if (result.studentMean < 30) {
-  console.error("rede fraca: média abaixo de 30 maçãs");
+if (!teacher.won || teacher.score < 141) {
+  console.error("professor não limpou o tabuleiro", teacher.score, teacher.won, teacher.starved);
+  process.exit(1);
+}
+if (result.studentMean < 120) {
+  console.error("rede fraca: média abaixo de 120 maçãs");
   process.exit(1);
 }

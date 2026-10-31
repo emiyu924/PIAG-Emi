@@ -20,7 +20,7 @@ Três caminhos comuns fazem uma rede jogar Snake:
 
 A clonagem é a mais rápida e ainda deixa a **rede** decidir cada passo da partida. O professor só existe na hora de montar os exemplos e, se você quiser, no botão **Professor**, para comparar.
 
-No teste automático (`node test.mjs`, semente 7) o treino de 9 mil exemplos e 20 épocas termina em menos de 1 segundo, e a rede come em média cerca de 77 maçãs numa grade 12×12 (o teto é 141). Na página, o mesmo treino aparece passo a passo e leva por volta de 2 segundos, porque a tela é atualizada no meio. O número muda com a semente: nas sementes medidas a média ficou entre cerca de 47 e 77 maçãs por partida.
+No teste automático (`node test.mjs`, semente 7) o professor segue um circuito que visita cada casa e limpa o tabuleiro: 141 maçãs, o teto da grade 12×12. A rede copia essa jogada com acerto de 100% e também limpa o tabuleiro nas partidas de prova. O treino no teste leva cerca de 1 segundo. Na página ele aparece passo a passo e leva um pouco mais, porque a tela é atualizada no meio.
 
 ## Passo a passo
 
@@ -32,7 +32,7 @@ Bater na parede ou no corpo encerra a partida. A célula do rabo fica livre, por
 
 ### 2. O que a rede enxerga
 
-Antes de cada passo, `features` mede os três lados e monta 18 números entre 0 e 1:
+Antes de cada passo, `features` mede os três lados e monta 24 números entre 0 e 1:
 
 - vai morrer se for para esse lado
 - quanto espaço livre sobra, comparado com o tamanho da cobra
@@ -40,25 +40,21 @@ Antes de cada passo, `features` mede os três lados e monta 18 números entre 0 
 - distância da maçã pelo caminho que desvia do corpo (1 se não tem caminho)
 - se, depois do passo, ainda dá para alcançar o rabo
 - se existe um caminho até a maçã que não fecha a cobra
+- se aquele lado é o próximo passo de um circuito que passa por todas as casas
 
 Esses números são os sensores. A rede não vê o tabuleiro pixel a pixel.
 
 ### 3. O professor
 
-`teacherAction` não é uma rede. É uma busca:
+`teacherAction` não é uma rede. A cobra nasce em três casas seguidas de um circuito que visita cada casa do tabuleiro uma vez e volta ao começo. O professor anda sempre para a próxima casa desse circuito. A maçã está numa casa vazia do mesmo caminho, então a cabeça chega nela sem entrar no próprio corpo. Quando não sobra casa vazia, a partida está limpa.
 
-1. Procura o caminho mais curto até a maçã, tratando o corpo como parede e o rabo como célula que vai sair.
-2. Simula a cobra seguindo esse caminho. Se no fim ainda existe caminho até o rabo, a jogada é o primeiro passo desse caminho.
-3. Se a maçã levaria a um beco, a cobra segue o próprio rabo para abrir espaço.
-4. Sem nenhuma das duas saídas, escolhe o lado com mais células livres.
-
-Esse professor joga uma partida inteira em poucos milissegundos e serve de gabarito.
+Esse professor serve de gabarito. Uma volta inteira cabe em 144 passos, menos do que o limite em que a cobra morre de fome por andar em círculo.
 
 ### 4. A rede
 
 São três camadas, sem biblioteca externa:
 
-- 18 entradas
+- 24 entradas
 - 32 neurônios no meio, com ativação que liga quando o sinal é positivo e deixa passar só um fio quando é negativo (leaky ReLU)
 - 3 saídas: esquerda, em frente, direita
 
@@ -70,7 +66,7 @@ Os pesos começam aleatórios (inicialização de He) e são guardados em listas
 
 `trainAndEval` faz três fases, e a página mostra cada uma:
 
-1. **Exemplos.** O professor joga várias partidas. Cada situação vira um par (18 sensores, jogada certa). O teto é 9 mil pares.
+1. **Exemplos.** O professor joga várias partidas. Cada situação vira um par (24 sensores, jogada certa). O teto é 12 mil pares.
 2. **Épocas.** Várias passadas por esses pares. O erro é a entropia cruzada: a rede é punida quando dá pouca probabilidade para a jogada do professor. O otimizador Adam mexe nos pesos na direção que diminui esse erro. Jogadas raras (os giros) pesam um pouco mais, para a rede não aprender só a seguir em frente.
 3. **Prova.** A rede joga partidas novas, sem o professor, e a página mostra a média de maçãs.
 

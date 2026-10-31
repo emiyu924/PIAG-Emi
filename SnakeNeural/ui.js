@@ -1,7 +1,7 @@
 // Desenha o tabuleiro, mostra a decisão da rede e conduz o treino.
 (function () {
   const B = SnakeBrain;
-  const KEY = "snake-neural-g12-i18";
+  const KEY = "snake-neural-g12-i24";
 
   const canvas = document.getElementById("board");
   const ctx = canvas.getContext("2d");

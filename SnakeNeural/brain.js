@@ -6,13 +6,13 @@
 //    a distância da maçã e se o rabo continua alcançável.
 // 3. Um professor (busca no tabuleiro) escolhe a jogada certa e gera exemplos.
 //    Isso é muito mais rápido do que a rede descobrir tudo por tentativa e erro.
-// 4. Uma rede neural pequena (18 → 32 → 3) aprende a copiar esses exemplos.
+// 4. Uma rede neural pequena (24 → 32 → 3) aprende a copiar esses exemplos.
 // 5. Na hora de jogar, só a rede escolhe a direção. O professor fica de fora.
 
 (function () {
   const GRID = 12;
   const N = GRID * GRID;
-  const INPUTS = 18;
+  const INPUTS = 24;
   const HIDDEN = 32;
   const OUTPUTS = 3;
   const HUNGER = GRID * GRID * 5;
@@ -23,6 +23,36 @@
   const seen = new Uint8Array(N);
   const parent = new Int16Array(N);
   const queue = new Int16Array(N);
+  // Circuito que visita cada casa uma vez e volta ao começo.
+  // A cobra nasce em três casas seguidas desse circuito. Seguir o próximo
+  // passo nunca entra no próprio corpo e acaba comendo toda maçã.
+  const CYCLE = new Int16Array(N);
+  const PREV = new Int16Array(N);
+  const ORDER = new Int16Array(N);
+
+  function buildCycle() {
+    const cells = [];
+    for (let y = 0; y < GRID; y++) {
+      if (y % 2 === 0) {
+        for (let x = 1; x < GRID; x++) cells.push(y * GRID + x);
+      } else {
+        for (let x = GRID - 1; x >= 1; x--) cells.push(y * GRID + x);
+      }
+    }
+    for (let y = GRID - 1; y >= 0; y--) cells.push(y * GRID);
+    for (let i = 0; i < N; i++) {
+      const cur = cells[i];
+      const nxt = cells[(i + 1) % N];
+      CYCLE[cur] = nxt;
+      PREV[nxt] = cur;
+      ORDER[cur] = i;
+    }
+  }
+  buildCycle();
+
+  function forwardDist(fromOrd, toOrd) {
+    return (toOrd - fromOrd + N) % N;
+  }
 
   function mulberry32(seed) {
     let a = seed >>> 0;
@@ -71,32 +101,19 @@
   }
 
   function createGame(rng, demo) {
-    let dir;
-    let hx;
-    let hy;
-    if (demo) {
-      dir = 1;
-      hx = 4;
-      hy = (GRID / 2) | 0;
-    } else {
-      dir = (rng() * 4) | 0;
-      const back = (dir + 2) & 3;
-      for (;;) {
-        hx = (rng() * GRID) | 0;
-        hy = (rng() * GRID) | 0;
-        const x1 = hx + DX[back];
-        const y1 = hy + DY[back];
-        const x2 = hx + 2 * DX[back];
-        const y2 = hy + 2 * DY[back];
-        if (inside(x1, y1) && inside(x2, y2)) break;
-      }
-    }
-    const back = (dir + 2) & 3;
+    const headC = demo ? idx(6, 6) : (rng() * N) | 0;
+    const neckC = PREV[headC];
+    const tailC = PREV[neckC];
+    const hx = headC % GRID;
+    const hy = (headC / GRID) | 0;
+    const neckX = neckC % GRID;
+    const neckY = (neckC / GRID) | 0;
+    const dir = directionOf(hx - neckX, hy - neckY);
     const game = {
       snake: [
         { x: hx, y: hy },
-        { x: hx + DX[back], y: hy + DY[back] },
-        { x: hx + 2 * DX[back], y: hy + 2 * DY[back] },
+        { x: neckX, y: neckY },
+        { x: tailC % GRID, y: (tailC / GRID) | 0 },
       ],
       dir,
       score: 0,
@@ -300,6 +317,8 @@
         f[9 + a] = 1;
         f[12 + a] = 0;
         f[15 + a] = 0;
+        f[18 + a] = 0;
+        f[21 + a] = 1;
       } else {
         f[a] = 0;
         f[3 + a] = Math.min(ev.space / ev.need, 2) / 2;
@@ -307,6 +326,9 @@
         f[9 + a] = ev.foodDist < 0 ? 1 : ev.foodDist / span;
         f[12 + a] = ev.tailReachable ? 1 : 0;
         f[15 + a] = ev.safeFood;
+        const circuit = circuitView(game, ev.x, ev.y);
+        f[18 + a] = circuit.open;
+        f[21 + a] = circuit.foodDist;
       }
     }
     return f;
@@ -380,36 +402,25 @@
     return bfsPath(head.x, head.y, tail.x, tail.y) !== null;
   }
 
-  // Professor: vai na maçã só se, depois de comer, ainda existe caminho até o rabo.
-  // Se isso prenderia a cobra, ela segue o rabo e abre espaço. Sem saída, escolhe
-  // o lado com mais células livres.
+  // O próximo passo do circuito, e a distância da maçã ao longo dele.
+  // open = 1 só no lado que continua o circuito. Seguir esse lado não fecha a cobra.
+  function circuitView(game, x, y) {
+    const head = game.snake[0];
+    const nxt = CYCLE[idx(head.x, head.y)];
+    const onStep = x === nxt % GRID && y === ((nxt / GRID) | 0);
+    if (!onStep || !game.food) return { open: onStep ? 1 : 0, foodDist: 1 };
+    const ord = ORDER[idx(x, y)];
+    const fOrd = ORDER[idx(game.food.x, game.food.y)];
+    return { open: 1, foodDist: forwardDist(ord, fOrd) / N };
+  }
+
+  // Professor: segue o circuito. A maçã está em alguma casa vazia desse caminho,
+  // então a cobra chega nela sem entrar no próprio corpo. No tabuleiro cheio, ganha.
   function teacherAction(game) {
     const head = game.snake[0];
-    const food = game.food;
-    if (food) {
-      markBodyExceptTail(game.snake);
-      const cells = bfsPath(head.x, head.y, food.x, food.y);
-      if (cells && cells.length > 0) {
-        const future = pathSurvives(game.snake, cells, food);
-        if (future && tailReachable(future)) {
-          const nx = cells[0] % GRID;
-          const ny = (cells[0] / GRID) | 0;
-          const action = relAction(game.dir, directionOf(nx - head.x, ny - head.y));
-          if (action >= 0 && !peek(game, action).fatal) return action;
-        }
-      }
-    }
-
-    const tail = game.snake[game.snake.length - 1];
-    markBodyExceptTail(game.snake);
-    const toTail = bfsPath(head.x, head.y, tail.x, tail.y);
-    if (toTail && toTail.length > 0) {
-      const nx = toTail[0] % GRID;
-      const ny = (toTail[0] / GRID) | 0;
-      const action = relAction(game.dir, directionOf(nx - head.x, ny - head.y));
-      if (action >= 0 && !peek(game, action).fatal) return action;
-    }
-
+    const nxt = CYCLE[idx(head.x, head.y)];
+    const action = relAction(game.dir, directionOf((nxt % GRID) - head.x, ((nxt / GRID) | 0) - head.y));
+    if (action >= 0 && !peek(game, action).fatal) return action;
     let bestA = 1;
     let bestS = -Infinity;
     for (let a = 0; a < 3; a++) {
@@ -603,7 +614,7 @@
 
   function rollout(policy, rng, demo, cap) {
     const game = createGame(rng, demo);
-    const limit = cap || GRID * GRID * 40;
+    const limit = cap || GRID * GRID * 100;
     while (game.alive && game.steps < limit) step(game, policy(game));
     return game;
   }
@@ -623,8 +634,8 @@
     const games = opts.games || 10;
     const epochs = opts.epochs || 24;
     const evalGames = opts.evalGames == null ? 8 : opts.evalGames;
-    const sampleCap = opts.sampleCap || 9000;
-    const stepCap = opts.stepCap || GRID * GRID * 25;
+    const sampleCap = opts.sampleCap || 12000;
+    const stepCap = opts.stepCap || GRID * GRID * 100;
     const slice = opts.slice || 200;
     const onProgress = opts.onProgress || function () {};
     const rng = mulberry32(seed);
