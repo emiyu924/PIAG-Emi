@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake neural — a cobra joga sozinha</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="top">
+      <p class="kicker">Rede neural · clonagem comportamental</p>
+      <h1>Snake que joga sozinho</h1>
+      <p class="lede">
+        A cobra não usa teclado. Uma rede pequena escolhe, a cada passo,
+        virar à esquerda, seguir em frente ou virar à direita.
+      </p>
+    </header>
+
+    <div class="layout">
+      <section class="stage" aria-label="Partida">
+        <div class="board-wrap">
+          <canvas id="board" width="720" height="720" aria-label="Tabuleiro do Snake. A cobra joga sozinha."></canvas>
+        </div>
+        <div class="hud">
+          <p><span>Maçãs</span><strong id="score">0</strong></p>
+          <p><span>Recorde</span><strong id="record">0</strong></p>
+          <p><span>Quem joga</span><strong id="driver">Rede</strong></p>
+        </div>
+        <p id="status" class="status" role="status">Preparando a rede…</p>
+      </section>
+
+      <aside class="side">
+        <section class="panel">
+          <h2>Decisão deste passo</h2>
+          <div class="bars" id="bars">
+            <div class="bar-row" data-action="0">
+              <span class="bar-label">Esquerda</span>
+              <span class="track"><span class="fill" id="fill-0"></span></span>
+              <span class="pct" id="pct-0">0%</span>
+            </div>
+            <div class="bar-row" data-action="1">
+              <span class="bar-label">Em frente</span>
+              <span class="track"><span class="fill" id="fill-1"></span></span>
+              <span class="pct" id="pct-1">0%</span>
+            </div>
+            <div class="bar-row" data-action="2">
+              <span class="bar-label">Direita</span>
+              <span class="track"><span class="fill" id="fill-2"></span></span>
+              <span class="pct" id="pct-2">0%</span>
+            </div>
+          </div>
+          <p class="hint">A barra mais alta é a jogada da rede. O traço marca a jogada que entrou no tabuleiro.</p>
+        </section>
+
+        <section class="panel">
+          <h2>Controles</h2>
+          <div class="controls">
+            <button type="button" id="pause" class="btn">Pausar</button>
+            <button type="button" id="retrain" class="btn btn-primary">Treinar de novo</button>
+          </div>
+          <div class="who" role="group" aria-label="Quem controla a cobra">
+            <button type="button" id="mode-net" class="chip is-on" aria-pressed="true">Rede neural</button>
+            <button type="button" id="mode-teacher" class="chip" aria-pressed="false">Professor</button>
+          </div>
+          <label class="speed" for="speed">
+            Velocidade
+            <input id="speed" type="range" min="4" max="36" value="12" step="1">
+            <span id="speed-label">12 passos/s</span>
+          </label>
+        </section>
+
+        <section class="panel">
+          <h2>Treino</h2>
+          <dl class="stats">
+            <div><dt>Amostras</dt><dd id="stat-samples">—</dd></div>
+            <div><dt>Acerto</dt><dd id="stat-acc">—</dd></div>
+            <div><dt>Perda</dt><dd id="stat-loss">—</dd></div>
+            <div><dt>Prova (maçãs)</dt><dd id="stat-mean">—</dd></div>
+          </dl>
+          <canvas id="loss" width="640" height="140" aria-label="Perda do treino por época. Cai quando a rede copia melhor o professor."></canvas>
+          <p class="chart-caption">Perda por época (quanto menor, mais a rede copia o professor).</p>
+        </section>
+
+        <section class="panel steps">
+          <h2>Como a rede aprende</h2>
+          <ol>
+            <li>O jogo é uma grade 12×12. Parede e o próprio corpo encerram a partida. A maçã faz a cobra crescer.</li>
+            <li>Cada passo vira 18 números: para a esquerda, a frente e a direita, a rede olha o perigo, o espaço livre, a distância da maçã e se ainda alcança o rabo.</li>
+            <li>Um professor calcula a jogada com busca e gera milhares de exemplos em menos de um segundo. Ir na maçã só vale se, depois de comer, ainda existir caminho até o rabo.</li>
+            <li>A rede tem 18 entradas, 32 neurônios no meio e 3 saídas. O treino mexe nos pesos até a saída repetir a jogada do professor.</li>
+            <li>Na partida, só a rede decide. O professor fica disponível no botão ao lado, para comparar.</li>
+          </ol>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <script src="brain.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
