@@ -1,0 +1,103 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "title": "Dom Casmurro",
+      "author": "Machado de Assis",
+      "year": 1899,
+      "genre": "Romance",
+      "coverUrl": "https://covers.openlibrary.org/b/id/8739161-L.jpg",
+      "synopsis": "Bentinho, narrador da história, apaixona-se por Capitu quando ainda são adolescentes vizinhos. Ao entrar no seminário por promessa da mãe, Capitu arquiteta um plano para que ele saia de lá. Anos depois, já casados e com um filho, Bentinho começa a suspeitar de uma traição entre Capitu e seu melhor amigo Escobar. A obra é considerada um dos maiores romances da literatura brasileira, famosa pela ambiguidade da personagem Capitu.",
+      "availableCopies": 3,
+      "totalCopies": 3
+    },
+    {
+      "id": 2,
+      "title": "O Senhor dos Anéis: A Sociedade do Anel",
+      "author": "J.R.R. Tolkien",
+      "year": 1954,
+      "genre": "Fantasia",
+      "coverUrl": "https://covers.openlibrary.org/b/id/8743161-L.jpg",
+      "synopsis": "O hobbit Frodo Bolseiro herda um anel mágico de seu tio Bilbo e descobre que é o Um Anel, criado pelo Senhor das Trevas Sauron para dominar todos os outros. Com a ajuda de seus amigos e de uma fellowship formada por representantes de diversas raças da Terra-Média, Frodo embarca em uma perigosa jornada para destruir o anel nas chamas da Montanha da Perdição.",
+      "availableCopies": 2,
+      "totalCopies": 4
+    },
+    {
+      "id": 3,
+      "title": "1984",
+      "author": "George Orwell",
+      "year": 1949,
+      "genre": "Distopia",
+      "coverUrl": "https://covers.openlibrary.org/b/id/8575708-L.jpg",
+      "synopsis": "Em um futuro sombrio, a Oceânia é governada pelo Partido, liderado pela enigmática figura do Grande Irmão. Winston Smith trabalha no Ministério da Verdade reescrevendo registros históricos para conformar-se às mudanças da realidade imposta pelo Partido. Ao se apaixonar por Julia e entrar em contato com a resistência, Winston começa a questionar o sistema totalitário que o oprime.",
+      "availableCopies": 0,
+      "totalCopies": 2
+    },
+    {
+      "id": 4,
+      "title": "Sapiens: Uma Breve História da Humanidade",
+      "author": "Yuval Noah Harari",
+      "year": 2011,
+      "genre": "Não-ficção",
+      "coverUrl": "https://covers.openlibrary.org/b/id/10527843-L.jpg",
+      "synopsis": "Em Sapiens, Yuval Noah Harari percorre toda a história da humanidade, da pré-história ao presente. O livro explora como o Homo sapiens chegou a dominar o planeta, analisando as revoluções cognitiva, agrícola e científica. Harari examina como mitos, dinheiro, impérios e religiões moldaram a sociedade humana ao longo de milênios.",
+      "availableCopies": 5,
+      "totalCopies": 5
+    },
+    {
+      "id": 5,
+      "title": "O Código Da Vinci",
+      "author": "Dan Brown",
+      "year": 2003,
+      "genre": "Suspense",
+      "coverUrl": "https://covers.openlibrary.org/b/id/8226198-L.jpg",
+      "synopsis": "O professor de simbologia Robert Langdon é chamado ao Museu do Louvre após o assassinato do curador Jacques Saunière. O corpo foi encontrado com símbolos enigmáticos gravados sobre si. Junto com a criptóloga Sophie Neveu, neta da vítima, Langdon descobre uma trilha de pistas escondidas nas obras de Leonardo da Vinci que levam a um segredo guardado por uma sociedade secreta há séculos.",
+      "availableCopies": 0,
+      "totalCopies": 3
+    },
+    {
+      "id": 6,
+      "title": "Duna",
+      "author": "Frank Herbert",
+      "year": 1965,
+      "genre": "Ficção Científica",
+      "coverUrl": "https://covers.openlibrary.org/b/id/9256714-L.jpg",
+      "synopsis": "No distante futuro, o jovem Paul Atreides e sua família assumem o controle do planeta desértico Arrakis, o único lugar no universo onde é produzida a especiaria melange, substância mais valiosa do cosmos. Após uma traição que aniquila quase toda a sua família, Paul foge para o deserto onde se une aos nativos Fremen. A obra é considerada o romance de ficção científica mais vendido de todos os tempos.",
+      "availableCopies": 2,
+      "totalCopies": 2
+    },
+    {
+      "id": 7,
+      "title": "Harry Potter e a Pedra Filosofal",
+      "author": "J.K. Rowling",
+      "year": 1997,
+      "genre": "Fantasia",
+      "coverUrl": "https://covers.openlibrary.org/b/id/10110415-L.jpg",
+      "synopsis": "Harry Potter é um menino órfão que vive uma vida miserável com seus tios. No seu aniversário de onze anos, descobre que é um bruxo e que foi aceito na Escola de Magia e Bruxaria de Hogwarts. No mundo mágico, Harry descobre a verdade sobre seus pais e sobre o poderoso bruxo das trevas Lord Voldemort, que matou seus pais quando ele ainda era bebê.",
+      "availableCopies": 4,
+      "totalCopies": 6
+    },
+    {
+      "id": 8,
+      "title": "O Pequeno Príncipe",
+      "author": "Antoine de Saint-Exupéry",
+      "year": 1943,
+      "genre": "Infantil",
+      "coverUrl": "https://covers.openlibrary.org/b/id/8739041-L.jpg",
+      "synopsis": "Um aviador que sofreu um acidente no deserto do Saara conhece um pequeno príncipe vindo de outro planeta. Através das conversas dos dois, a história explora temas como amor, perda, amizade, solidão e a diferença entre a visão das crianças e dos adultos. Com sua rosa, sua raposa e seus planetas, O Pequeno Príncipe é um dos livros mais traduzidos e vendidos da história.",
+      "availableCopies": 3,
+      "totalCopies": 4
+    }
+  ],
+  "reservations": [
+    {
+      "bookId": 5,
+      "bookTitle": "O Código Da Vinci",
+      "userName": "Emilly",
+      "userEmail": "emilly@gmail.com",
+      "reservationDate": "2026-10-31T12:42:16.512Z",
+      "status": "Pendente",
+      "id": 1
+    }
+  ]
+}

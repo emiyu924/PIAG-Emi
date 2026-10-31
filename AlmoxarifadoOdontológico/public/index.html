@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almoxarifado Odontológico</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <path d="M8 12h8M12 8v8"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">AlmoxDent</span>
+        <span class="logo-sub">Clínica Odontológica</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-page="materiais">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        </svg>
+        <span>Materiais</span>
+      </a>
+      <a href="#" class="nav-item" data-page="movimentacoes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+          <polyline points="17 6 23 6 23 12"/>
+        </svg>
+        <span>Movimentações</span>
+      </a>
+      <a href="#" class="nav-item" data-page="estoque-baixo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <span>Estoque Baixo</span>
+        <span class="badge" id="badge-estoque-baixo">0</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">A</div>
+        <div class="user-details">
+          <span class="user-name">Almoxarife</span>
+          <span class="user-role">Administrador</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" id="menu-toggle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+        <h1 class="page-title" id="page-title">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <span class="current-date" id="current-date"></span>
+        <button class="btn btn-primary" id="btn-novo-material">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Novo Material
+        </button>
+      </div>
+    </header>
+
+    <!-- Pages -->
+    <div class="content-area">
+
+      <!-- DASHBOARD -->
+      <section class="page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card stat-blue">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total de Materiais</span>
+              <span class="stat-value" id="stat-total-materiais">—</span>
+            </div>
+          </div>
+          <div class="stat-card stat-green">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 12 20 22 4 22 4 12"/>
+                <rect x="2" y="7" width="20" height="5"/>
+                <line x1="12" y1="22" x2="12" y2="7"/>
+                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total em Estoque</span>
+              <span class="stat-value" id="stat-total-itens">—</span>
+            </div>
+          </div>
+          <div class="stat-card stat-orange">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                <line x1="12" y1="9" x2="12" y2="13"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Estoque Baixo</span>
+              <span class="stat-value" id="stat-estoque-baixo">—</span>
+            </div>
+          </div>
+          <div class="stat-card stat-purple">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 7l9-5 9 5v10l-9 5-9-5V7z"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Categorias</span>
+              <span class="stat-value" id="stat-categorias">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Alertas de Estoque Baixo</h2>
+              <span class="badge badge-danger" id="badge-alertas">0</span>
+            </div>
+            <div class="alert-list" id="alert-list">
+              <div class="empty-state">Carregando...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Últimas Movimentações</h2>
+            </div>
+            <div class="movement-list" id="dashboard-movement-list">
+              <div class="empty-state">Nenhuma movimentação registrada</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MATERIAIS -->
+      <section class="page" id="page-materiais">
+        <div class="filters-bar">
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="input-busca" placeholder="Buscar material..." />
+          </div>
+          <select id="select-categoria" class="select-filter">
+            <option value="todas">Todas as categorias</option>
+          </select>
+          <button class="btn btn-outline" id="btn-limpar-filtros">Limpar</button>
+        </div>
+
+        <div class="materiais-grid" id="materiais-grid">
+          <div class="loading-state">
+            <div class="spinner"></div>
+            <span>Carregando materiais...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOVIMENTAÇÕES -->
+      <section class="page" id="page-movimentacoes">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Histórico de Movimentações</h2>
+          </div>
+          <div class="table-container">
+            <table class="table" id="table-movimentacoes">
+              <thead>
+                <tr>
+                  <th>Material</th>
+                  <th>Operação</th>
+                  <th>Qtd</th>
+                  <th>Antes</th>
+                  <th>Depois</th>
+                  <th>Motivo</th>
+                  <th>Data</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-movimentacoes">
+                <tr><td colspan="7" class="empty-state">Nenhuma movimentação</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ESTOQUE BAIXO -->
+      <section class="page" id="page-estoque-baixo">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Materiais com Estoque Crítico</h2>
+          </div>
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Material</th>
+                  <th>Categoria</th>
+                  <th>Estoque Atual</th>
+                  <th>Mínimo</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-estoque-baixo">
+                <tr><td colspan="6" class="empty-state">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- MODAL: Novo / Editar Material -->
+  <div class="modal-overlay" id="modal-material">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-material-title">Novo Material</h2>
+        <button class="modal-close" id="modal-material-close">&times;</button>
+      </div>
+      <form id="form-material" class="modal-body">
+        <input type="hidden" id="material-id" />
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome do Material *</label>
+            <input type="text" id="material-nome" required placeholder="Ex: Luvas de Procedimento" />
+          </div>
+          <div class="form-group">
+            <label>Categoria *</label>
+            <input type="text" id="material-categoria" required placeholder="Ex: EPI" list="lista-categorias" />
+            <datalist id="lista-categorias"></datalist>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Quantidade *</label>
+            <input type="number" id="material-quantidade" required min="0" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label>Unidade *</label>
+            <input type="text" id="material-unidade" required placeholder="Ex: unidades, pares, caixas" />
+          </div>
+          <div class="form-group">
+            <label>Qtd. Mínima</label>
+            <input type="number" id="material-qtdMinima" min="0" placeholder="0" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Fornecedor</label>
+            <input type="text" id="material-fornecedor" placeholder="Nome do fornecedor" />
+          </div>
+          <div class="form-group">
+            <label>Localização</label>
+            <input type="text" id="material-localizacao" placeholder="Ex: Prateleira A1" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Descrição</label>
+          <textarea id="material-descricao" rows="3" placeholder="Descrição detalhada do material"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancelar-material">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Material</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Ajuste de Quantidade -->
+  <div class="modal-overlay" id="modal-quantidade">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-qtd-title">Ajustar Quantidade</h2>
+        <button class="modal-close" id="modal-quantidade-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="material-info-box" id="material-info-box"></div>
+        <input type="hidden" id="qtd-material-id" />
+        <div class="operacao-tabs">
+          <button class="tab-btn active" data-op="adicionar" id="tab-adicionar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Adicionar
+          </button>
+          <button class="tab-btn" data-op="remover" id="tab-remover">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Remover
+          </button>
+        </div>
+        <div class="form-group">
+          <label>Quantidade</label>
+          <div class="quantity-control">
+            <button type="button" class="qty-btn" id="btn-decrement">−</button>
+            <input type="number" id="qtd-valor" min="1" value="1" />
+            <button type="button" class="qty-btn" id="btn-increment">+</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Motivo (opcional)</label>
+          <input type="text" id="qtd-motivo" placeholder="Ex: Compra, Uso em procedimento..." />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-cancelar-qtd">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="btn-confirmar-qtd">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Detalhes do Material -->
+  <div class="modal-overlay" id="modal-detalhes">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-detalhes-title">Detalhes</h2>
+        <button class="modal-close" id="modal-detalhes-close">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-detalhes-body">
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Confirm Dialog -->
+  <div class="modal-overlay" id="modal-confirm">
+    <div class="modal modal-sm">
+      <div class="modal-header">
+        <h2 class="modal-title">Confirmar Exclusão</h2>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-message" class="confirm-text"></p>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="btn-confirm-cancel">Cancelar</button>
+          <button type="button" class="btn btn-danger" id="btn-confirm-ok">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+

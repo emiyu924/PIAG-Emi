@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblioteca Digital</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Ícone de livro via emoji favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>"
+    />
+  </head>
+  <body>
+
+    <!-- ===== CABEÇALHO ===== -->
+    <header class="header">
+      <div class="header__inner">
+        <div class="header__brand">
+          <span class="header__icon">📚</span>
+          <h1 class="header__title">Biblioteca Digital</h1>
+        </div>
+        <!-- Navegação entre abas -->
+        <nav class="header__nav">
+          <button
+            id="btn-tab-catalog"
+            class="nav-tab nav-tab--active"
+            aria-pressed="true"
+          >
+            Catálogo
+          </button>
+          <button
+            id="btn-tab-reservations"
+            class="nav-tab"
+            aria-pressed="false"
+          >
+            Minhas Reservas
+            <span id="reservations-badge" class="badge badge--nav hidden">0</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="main">
+
+      <!-- ===== SEÇÃO: CATÁLOGO ===== -->
+      <section id="section-catalog" class="section section--active">
+
+        <!-- Barra de filtros -->
+        <div class="filters">
+          <div class="filters__search">
+            <span class="filters__search-icon">🔍</span>
+            <input
+              id="input-search"
+              type="search"
+              class="filters__input"
+              placeholder="Buscar por título ou autor..."
+              aria-label="Buscar livros"
+            />
+          </div>
+          <div class="filters__genre">
+            <select
+              id="select-genre"
+              class="filters__select"
+              aria-label="Filtrar por gênero"
+            >
+              <option value="">Todos os gêneros</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Estado de carregamento -->
+        <div id="catalog-loading" class="state-feedback state-feedback--loading hidden">
+          <div class="spinner"></div>
+          <p>Carregando catálogo...</p>
+        </div>
+
+        <!-- Estado de erro -->
+        <div id="catalog-error" class="state-feedback state-feedback--error hidden">
+          <span class="state-feedback__icon">⚠️</span>
+          <p id="catalog-error-msg">Não foi possível carregar o catálogo.</p>
+          <button id="btn-retry" class="btn btn--secondary">Tentar novamente</button>
+        </div>
+
+        <!-- Estado vazio (filtro sem resultados) -->
+        <div id="catalog-empty" class="state-feedback state-feedback--empty hidden">
+          <span class="state-feedback__icon">🔎</span>
+          <p>Nenhum livro encontrado para os filtros aplicados.</p>
+        </div>
+
+        <!-- Grid de cards de livros -->
+        <div id="books-grid" class="books-grid" role="list" aria-label="Catálogo de livros"></div>
+      </section>
+
+      <!-- ===== SEÇÃO: RESERVAS ===== -->
+      <section id="section-reservations" class="section hidden">
+
+        <div class="section-header">
+          <h2 class="section-header__title">Minhas Reservas</h2>
+          <p class="section-header__subtitle">Histórico completo de solicitações de reserva</p>
+        </div>
+
+        <!-- Estado de carregamento das reservas -->
+        <div id="reservations-loading" class="state-feedback state-feedback--loading hidden">
+          <div class="spinner"></div>
+          <p>Carregando reservas...</p>
+        </div>
+
+        <!-- Estado vazio de reservas -->
+        <div id="reservations-empty" class="state-feedback state-feedback--empty hidden">
+          <span class="state-feedback__icon">📋</span>
+          <p>Você ainda não possui reservas.</p>
+          <button id="btn-go-catalog" class="btn btn--primary">Explorar catálogo</button>
+        </div>
+
+        <!-- Lista de reservas -->
+        <div id="reservations-list" class="reservations-list" role="list" aria-label="Lista de reservas"></div>
+      </section>
+    </main>
+
+    <!-- ===== MODAL: DETALHES DO LIVRO ===== -->
+    <div id="modal-details" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-book-title">
+      <div class="modal__overlay" id="modal-overlay"></div>
+      <div class="modal__content">
+
+        <button class="modal__close" id="btn-modal-close" aria-label="Fechar modal">✕</button>
+
+        <div class="modal__body">
+          <!-- Capa do livro -->
+          <div class="modal__cover-wrapper">
+            <img id="modal-book-cover" class="modal__cover" src="" alt="" />
+          </div>
+
+          <!-- Informações do livro -->
+          <div class="modal__info">
+            <div class="modal__meta">
+              <span id="modal-book-genre" class="genre-tag"></span>
+              <span id="modal-book-year" class="year-tag"></span>
+            </div>
+            <h2 id="modal-book-title" class="modal__title"></h2>
+            <p id="modal-book-author" class="modal__author"></p>
+
+            <div id="modal-copies-info" class="modal__copies">
+              <span class="modal__copies-icon">📖</span>
+              <span id="modal-copies-text"></span>
+            </div>
+
+            <div class="modal__synopsis">
+              <h3 class="modal__synopsis-title">Sinopse</h3>
+              <p id="modal-book-synopsis" class="modal__synopsis-text"></p>
+            </div>
+
+            <button id="btn-reserve" class="btn btn--primary btn--full" data-book-id="">
+              Solicitar Reserva
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MODAL: FORMULÁRIO DE RESERVA ===== -->
+    <div id="modal-reserve" class="modal" role="dialog" aria-modal="true" aria-labelledby="reserve-modal-title">
+      <div class="modal__overlay" id="reserve-overlay"></div>
+      <div class="modal__content modal__content--form">
+
+        <button class="modal__close" id="btn-reserve-close" aria-label="Fechar formulário">✕</button>
+
+        <div class="reserve-modal__header">
+          <span class="reserve-modal__icon">📝</span>
+          <h2 id="reserve-modal-title" class="reserve-modal__title">Solicitar Reserva</h2>
+          <p id="reserve-modal-book" class="reserve-modal__book"></p>
+        </div>
+
+        <form id="form-reserve" novalidate>
+          <div class="form-group">
+            <label for="input-name" class="form-label">Nome completo <span class="required">*</span></label>
+            <input
+              id="input-name"
+              type="text"
+              class="form-input"
+              placeholder="Digite seu nome completo"
+              autocomplete="name"
+              required
+            />
+            <span class="form-error" id="error-name"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-email" class="form-label">E-mail <span class="required">*</span></label>
+            <input
+              id="input-email"
+              type="email"
+              class="form-input"
+              placeholder="seu@email.com"
+              autocomplete="email"
+              required
+            />
+            <span class="form-error" id="error-email"></span>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="btn-cancel-reserve" class="btn btn--ghost">Cancelar</button>
+            <button type="submit" id="btn-submit-reserve" class="btn btn--primary">
+              <span id="btn-submit-text">Confirmar Reserva</span>
+              <span id="btn-submit-spinner" class="btn-spinner hidden"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== CONTAINER DE TOASTS ===== -->
+    <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+

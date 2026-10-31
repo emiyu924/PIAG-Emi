@@ -1,0 +1,16 @@
+{
+  "name": "biblioteca-interativa",
+  "version": "1.0.0",
+  "description": "Biblioteca Digital Interativa com catálogo de livros e sistema de reservas",
+  "scripts": {
+    "server": "json-server --watch db.json --port 3000",
+    "start": "json-server --watch db.json --port 3000"
+  },
+  "keywords": ["biblioteca", "livros", "reservas", "json-server"],
+  "author": "Desenvolvedor Full-Stack",
+  "license": "MIT",
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}
+
